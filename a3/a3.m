@@ -153,9 +153,9 @@ function ret = d_loss_by_d_model(model, data, wd_coefficient)
   m = size(data.targets, 2)
   
   %dy/dh = dy/dz*dz/dh = x*y(1-y)*(t-y)
-  ret.input_to_hid = (1/m) * (((model.hid_to_class' * (class_prob - data.targets)) .* hid_output .* (1 - hid_output)) * data.inputs') + model.input_to_hid*wd_coefficient;
+  ret.input_to_hid = (1/m) * (((model.hid_to_class' * (class_prob - data.targets)) .* hid_output .* (1 - hid_output)) * data.inputs') + model.input_to_hid * wd_coefficient;
   %dC/dz = (y-t)x
-  ret.hid_to_class = (1/m) * ((class_prob - data.targets) * hid_output') + model.hid_to_class*wd_coefficient;
+  ret.hid_to_class = (1/m) * ((class_prob - data.targets) * hid_output') + model.hid_to_class * wd_coefficient;
 end
 
 function ret = model_to_theta(model)
